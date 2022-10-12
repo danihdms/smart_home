@@ -7,7 +7,6 @@ class ItemModel {
   late final List<Device> _rollerShutters = getRollerShutters(_devices);
 
   ItemModel.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson['devices'].length);
     List<Device> tmp = [];
     for (int i = 0; i < parsedJson['devices'].length; i++) {
       Device device = Device(parsedJson['devices'][i]);
