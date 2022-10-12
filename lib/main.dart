@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/src/ui/constants.dart';
-import 'package:smart_home/src/ui/home_screen.dart';
+import 'package:smart_home/src/ui/useful_info.dart';
 
 void main() {
   runApp(const App());
@@ -20,7 +20,7 @@ class App extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(bodyColor: kDarkGray),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const HomeScreen(),
+      home: const UsefulInfo(),
     );
   }
 }

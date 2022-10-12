@@ -74,10 +74,22 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///home/danihdms/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///home/danihdms/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "lite_rolling_switch",
+      "rootUri": "file:///home/danihdms/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/lite_rolling_switch-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "matcher",
@@ -176,7 +188,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-10-11T10:19:51.712255Z",
+  "generated": "2022-10-12T07:52:43.024043Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

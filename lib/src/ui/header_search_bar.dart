@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import '../models/item_model.dart';
 import 'constants.dart';
 
 class HeaderSearchBar extends StatelessWidget {
   const HeaderSearchBar({
     Key? key,
+    required this.user,
     required this.size,
   }) : super(key: key);
 
+  final User user;
   final Size size;
 
   @override
@@ -58,18 +61,35 @@ class HeaderSearchBar extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: TextStyle(
-                      color: kBrown.withOpacity(0.5),
+                child: Center(
+                  child: Text(
+                    'Hi ${user.firstName} !',
+                    style: TextStyle(
+                      color: kBrown,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: const Offset(10.0, 10.0),
+                          blurRadius: 3.0,
+                          color: kBrown.withOpacity(0.23),
+                        ),
+                      ],
                     ),
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    suffixIconConstraints: const BoxConstraints(maxHeight: 24),
-                    suffixIcon: Image.asset('assets/search_icon.png'),
                   ),
                 ),
+                // child: TextField(
+                //   decoration: InputDecoration(
+                //     hintText: 'Search',
+                //     hintStyle: TextStyle(
+                //       color: kBrown.withOpacity(0.5),
+                //     ),
+                //     enabledBorder: InputBorder.none,
+                //     focusedBorder: InputBorder.none,
+                //     suffixIconConstraints: const BoxConstraints(maxHeight: 24),
+                //     suffixIcon: Image.asset('assets/search_icon.png'),
+                //   ),
+                // ),
               ),
             ),
           ],

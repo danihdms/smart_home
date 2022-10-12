@@ -39,6 +39,7 @@ dependencies:
   rxdart: ^0.27.5
   http: ^0.13.5
   sleek_circular_slider : ^2.0.1
+  lite_rolling_switch: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-// import 'package:smart_home/src/ui/header_device.dart';
+import 'package:smart_home/src/ui/device_screen.dart';
 
 import '../models/item_model.dart';
 import 'constants.dart';
@@ -58,14 +60,36 @@ class LightBody extends DeviceBody {
         SleekCircularSlider(
           initialValue: device.intensity!.toDouble(),
           appearance: CircularSliderAppearance(
+              size: MediaQuery.of(context).size.width * 0.35,
               infoProperties: InfoProperties(
                   bottomLabelText: 'Intensity',
                   bottomLabelStyle: const TextStyle(color: kBrown)),
               customColors: CustomSliderColors(
+                shadowColor: kBrown,
+                shadowMaxOpacity: 0.2,
                 progressBarColors: [kBrown, kWhite],
                 trackColor: kLightSteelBlue,
               )),
           onChange: (value) => Light.setIntensity(device, value.toInt()),
+        ),
+        LiteRollingSwitch(
+          value: (device.mode == 'ON'),
+          textOn: 'ON',
+          textOff: 'OFF',
+          colorOn: kBrown,
+          colorOff: kBrown.withOpacity(0.23),
+          iconOn: Icons.done,
+          iconOff: Icons.blur_off,
+          onSwipe: () {},
+          onChanged: (mode) {
+            if (mode) {
+              device.mode = 'ON';
+            } else {
+              device.mode = 'OFF';
+            }
+          },
+          onDoubleTap: () {},
+          onTap: () {},
         )
       ],
     );
@@ -75,15 +99,18 @@ class LightBody extends DeviceBody {
 class HeaterBody extends DeviceBody {
   const HeaterBody({super.key, required super.device});
 
+  get rollerShutters => null;
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         SleekCircularSlider(
           initialValue: device.temperature!.toDouble(),
           min: 5,
           max: 28,
           appearance: CircularSliderAppearance(
+              size: MediaQuery.of(context).size.width * 0.35,
               infoProperties: InfoProperties(
                   modifier: (percentage) {
                     final roundedValue = percentage.ceil().toInt().toString();
@@ -92,10 +119,31 @@ class HeaterBody extends DeviceBody {
                   bottomLabelText: 'Temperature',
                   bottomLabelStyle: const TextStyle(color: kBrown)),
               customColors: CustomSliderColors(
+                shadowColor: kBrown,
+                shadowMaxOpacity: 0.2,
                 progressBarColors: [kBrown, kWhite],
                 trackColor: kLightSteelBlue,
               )),
           onChange: (value) => Heater.setTemperature(device, value.toInt()),
+        ),
+        LiteRollingSwitch(
+          value: (device.mode == 'ON'),
+          textOn: 'ON',
+          textOff: 'OFF',
+          colorOn: kBrown,
+          colorOff: kBrown.withOpacity(0.23),
+          iconOn: Icons.done,
+          iconOff: Icons.blur_off,
+          onSwipe: () {},
+          onChanged: (mode) {
+            if (mode) {
+              device.mode = 'ON';
+            } else {
+              device.mode = 'OFF';
+            }
+          },
+          onDoubleTap: () {},
+          onTap: () {},
         )
       ],
     );
@@ -119,15 +167,18 @@ class RollerShutterBody extends DeviceBody {
         SleekCircularSlider(
           initialValue: device.position!.toDouble(),
           appearance: CircularSliderAppearance(
+              size: MediaQuery.of(context).size.width * 0.35,
               infoProperties: InfoProperties(
                   bottomLabelText: opened,
                   bottomLabelStyle: const TextStyle(color: kBrown)),
               customColors: CustomSliderColors(
+                shadowColor: kBrown,
+                shadowMaxOpacity: 0.2,
                 progressBarColors: [kBrown, kWhite],
                 trackColor: kLightSteelBlue,
               )),
           onChange: (value) => RollerShutter.setPosition(device, value.toInt()),
-        )
+        ),
       ],
     );
   }
@@ -172,21 +223,24 @@ class HeaderDevice extends StatelessWidget {
               bottom: 36 + kDefaultPadding,
             ),
             height: size.height * 0.2 - 27,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: kBrown,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(36),
                 bottomRight: Radius.circular(36),
               ),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, 10),
+                  blurRadius: 50,
+                  color: kLightSteelBlue.withOpacity(0.23),
+                ),
+              ],
             ),
             child: Center(
               child: SizedBox(
                 height: 130,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(backgroundColor: kBrown),
-                  child: Image.asset(img),
-                ),
+                child: Image.asset(img),
               ),
             ),
           ),

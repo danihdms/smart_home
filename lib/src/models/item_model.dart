@@ -95,6 +95,10 @@ class Device {
   String? get mode => _mode;
   int? get temperature => _temperature;
 
+  set mode(value) {
+    _mode = value;
+  }
+
   @override
   String toString() {
     if (intensity != null) {
@@ -111,7 +115,16 @@ class Light extends Device {
   Light(light) : super(light);
 
   static void setIntensity(Device device, int intensity) {
-    device._intensity = intensity;
+    if (intensity == 0) {
+      device._intensity = 0;
+      setMode(device, 'OFF');
+    } else if (intensity == 100) {
+      setMode(device, 'ON');
+      device._intensity = 100;
+    } else {
+      setMode(device, 'ON');
+      device._intensity = intensity + 1;
+    }
   }
 
   static void setMode(Device device, String mode) {
@@ -127,7 +140,15 @@ class RollerShutter extends Device {
   RollerShutter(rollerShutter) : super(rollerShutter);
 
   static void setPosition(Device device, int position) {
-    device._position = position;
+    if (position >= 100) {
+      device._position = 100;
+    } else {
+      if (position == 0) {
+        device._position = 0;
+      } else {
+        device._position = position + 1;
+      }
+    }
   }
 
   static String printAtt(Device device) {
@@ -145,7 +166,16 @@ class Heater extends Device {
   Heater(heater) : super(heater);
 
   static void setTemperature(Device device, int temperature) {
-    device._temperature = temperature;
+    if (device._temperature! <= 27) {
+      device._temperature = temperature + 1;
+    } else {
+      device._temperature = 28;
+    }
+    if (temperature > 5 && device._mode == 'ON') {
+      setMode(device, 'ON');
+    } else {
+      setMode(device, 'OFF');
+    }
   }
 
   static void setMode(Device device, String mode) {

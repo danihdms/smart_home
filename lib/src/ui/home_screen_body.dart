@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/src/ui/constants.dart';
-import 'package:smart_home/src/ui/device_screen.dart';
-import '../blocs/devices_bloc.dart';
 import '../models/item_model.dart';
+import 'constants.dart';
+import 'device_screen.dart';
 import 'header_search_bar.dart';
 
-class HomeScreenBody extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return HomeScreenBodyState();
-  }
-}
+class HomeScreenBody extends StatelessWidget {
+  const HomeScreenBody({
+    super.key,
+    required this.user,
+    required this.lights,
+    required this.heaters,
+    required this.rollerShutters,
+    required this.devTypes,
+  });
 
-class HomeScreenBodyState extends State<HomeScreenBody> {
-  @override
-  void initState() {
-    super.initState();
-    bloc.fetchAllDevices();
-  }
-
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
+  final User user;
+  final List<String> devTypes;
+  final List<Device> lights;
+  final List<Device> heaters;
+  final List<Device> rollerShutters;
 
   @override
   Widget build(BuildContext context) {
@@ -31,24 +26,16 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          HeaderSearchBar(size: size),
-          StreamBuilder(
-            stream: bloc.allDevices,
-            builder: (context, AsyncSnapshot<ItemModel> snapshot) {
-              if (snapshot.hasData) {
-                return ListViewBuilder(
-                  snapshot: snapshot,
-                  devTypes: snapshot.data!.devTypes,
-                  lights: snapshot.data!.lights,
-                  heaters: snapshot.data!.heaters,
-                  rollerShutters: snapshot.data!.rollerShutters,
-                );
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+          HeaderSearchBar(
+            size: size,
+            user: user,
+          ),
+          ListViewBuilder(
+            user: user,
+            devTypes: devTypes,
+            lights: lights,
+            heaters: heaters,
+            rollerShutters: rollerShutters,
           ),
         ],
       ),
@@ -59,14 +46,14 @@ class HomeScreenBodyState extends State<HomeScreenBody> {
 class ListViewBuilder extends StatelessWidget {
   const ListViewBuilder({
     Key? key,
-    required this.snapshot,
+    required this.user,
     required this.devTypes,
     required this.lights,
     required this.heaters,
     required this.rollerShutters,
   }) : super(key: key);
 
-  final AsyncSnapshot<ItemModel> snapshot;
+  final User user;
   final List<String> devTypes;
   final List<Device> lights;
   final List<Device> heaters;
@@ -177,7 +164,12 @@ class ListViewBuilder extends StatelessWidget {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => DeviceScreen(
+          user: user,
           device: tmp[i],
+          heaters: heaters,
+          lights: lights,
+          rollerShutters: rollerShutters,
+          devTypes: devTypes,
         ),
       ),
     );
